@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../component/Navbar";
-import { AiFillDelete } from "react-icons/fa";
-import { Link } from "react-router-dom";
+
+import { Link ,useNavigate} from "react-router-dom";
 import Footer from "../component/Footer";
 export default function Home() {
+  const navigate=useNavigate();
   const token = localStorage.getItem("auth");
-  const [list, setList] = useState(null);
+  const [list, setList] = useState([]);
   const [count, setCount] = useState(0);
+ let Total=0;
   const deleteStudent = (ID) => {
     const yes = window.confirm("Are you sure you want to delete");
     if (yes) {
@@ -27,6 +29,10 @@ export default function Home() {
     return;
   };
   useEffect(() => {
+    if(!token){
+      navigate('/login')
+      return;
+    }
     fetch("http://localhost:8000/api/all_Student_List", {
       method: "GET",
       headers: {
@@ -34,6 +40,11 @@ export default function Home() {
       },
     }).then((res) => {
       res.json().then((data) => {
+        if(data.statusCode===403){
+           localStorage.clear();
+            navigate('/login');
+             return
+        }
         setList(data);
       });
     });
@@ -68,7 +79,13 @@ export default function Home() {
                     <i className="bi bi-people"></i>
                   </div>
                   <div className="ps-3">
-                    <h6>1244</h6>
+                    <h6>{
+                      list.map((element,i)=>{
+                        i=i+1;
+                         Total=i;
+                         
+                      })  
+                      }<span>{Total}</span></h6>
                   </div>
                 </div>
               </div>
@@ -122,15 +139,17 @@ export default function Home() {
                             <th scope="col">Course Type</th>
                             <th scope="col">Course Fee</th>
                             <th scope="col">Fee Status</th>
-                            <th scope="col">Action</th>
+                            <th scope="col" >Action</th>
                           </tr>
                         </thead>
                         <tbody>
                           {list != null ? (
-                            list.map((curentStudent) => {
+                            list.map((curentStudent,i) => {
+                                 
+                               Total=i;
                               return (
                                 <>
-                                  <tr>
+                                  <tr key={i}>
                                     <th scope="row">
                                       <Link
                                         to={`/invoice/${curentStudent.studentID}`}
@@ -159,10 +178,11 @@ export default function Home() {
                                     <td>
                                       <Link
                                         to={`/payment/${curentStudent.name}/${curentStudent.studentID}`}
+                                        className="btn btn-primary btn-sm mx-2"
                                       >
                                         Pay Fee
                                       </Link>
-                                      <button
+                                      <button className="btn btn-danger btn-sm"
                                         onClick={() =>
                                           deleteStudent(curentStudent.studentID)
                                         }

@@ -12,11 +12,11 @@ export default function Invoice() {
     console.log("print");
     let invoice = document.getElementById("dashboard");
     var opt = {
-      margin: [0, 1, 0, 0],
+      margin: [0, 0.5, 0, 0],
       filename: `${data.name}-invoice.pdf`,
       image: { type: "jpeg", quality: 0.98 },
       html2canvas: { scale: 2 },
-      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      jsPDF: { unit: "in", format: "A4", orientation: "portrait" },
     };
 
     // New Promise-based usage:
@@ -54,7 +54,7 @@ export default function Invoice() {
         </>
       ) : (
         <>
-          <section class="section dashboard" id="dashboard">
+          <section class="section dashboard mt-5" id="dashboard">
             <div class="row">
               <div class="col-12">
                 <div class="row">
@@ -65,7 +65,7 @@ export default function Invoice() {
                           <div class="row d-flex align-items-baseline">
                             <div class="col-xl-9">
                               <p style={{ color: "#7e8d9f", fontSize: "20px" }}>
-                                Paymnet Invoice ||<strong>ID: #123-123</strong>
+                                Paymnet Invoice ||<strong>{data.studentID}</strong>
                               </p>
                             </div>
 
@@ -73,7 +73,7 @@ export default function Invoice() {
                           </div>
                           <div class="container">
                             <div class="row justify-content-around ">
-                              <div class="col-lg-7 col-md-8 col-7">
+                              <div class="col-lg-7 col-md-5 col-5">
                                 <ul class="list-unstyled">
                                   <li
                                     style={{
@@ -92,7 +92,7 @@ export default function Invoice() {
                                   <li>Email: info@lsd.education</li>
                                 </ul>
                               </div>
-                              <div class="col-lg-3 col-md-4 col-3 lsd-logo">
+                              <div class="col-lg-3 col-md-3 col-3 lsd-logo">
                                 <img src="/assets/image/lsd.png" alt="Logo" />
                               </div>
                             </div>
@@ -223,20 +223,20 @@ export default function Invoice() {
                               <div class="col-xl-10">
                                 <p>
                                   Date:{" "}
-                                  <span>{`${current.getDate()}/${current.getMonth()}/${current.getFullYear()}`}</span>
+                                  <span>{current.getMonth()+1}</span>
                                 </p>
                               </div>
                               <div class="col-xl-2" id="remove-element">
                                 <button
                                   type="button"
-                                  class="btn btn-danger text-capitalize"
-                                  style={{ backgroundColor: "#ed2e2e" }}
+                                  className="btn btn-success btn-sm mx-2"
+                                
                                   onClick={() => printInvoice()}
                                 >
                                   Print Invoice
                                 </button>
-                                <Link to="/home">
-                                  <button className="btn btn-secondary">
+                                <Link to="/home" >
+                                  <button className="btn btn-primary btn-sm">
                                     Back
                                   </button>
                                 </Link>

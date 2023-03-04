@@ -4,14 +4,20 @@ const authRdeucer=(state,action)=>{
         return{
             ...state,
             auth:action.payload,
-            msg:"Successfully"
+            msg:" Time out ! Login again"
         }
-     case "WRONG_CRRIDENTIAL" :
+     case "SERVER_ERROR" :
       return {
         ...state,
         msg:action.payload
 
       } 
+      case "WRONG_CRRIDENTIAL" :
+        return {
+          ...state,
+          msg:action.payload
+  
+        }
       case "LOGOUT" :
       return {
         ...state,

@@ -13,7 +13,7 @@ import ErrorPage from "./pages/ErrorPage";
 import { useAuthContext } from "./Context/AuthContext";
 function App() {
   const { auth } = useAuthContext();
-  console.log(auth);
+
   return (
     <>
       <BrowserRouter>

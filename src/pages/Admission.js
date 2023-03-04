@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { json, Link,useNavigate } from "react-router-dom";
 import Navbar from "../component/Navbar";
 export default function Admission() {
@@ -150,6 +150,13 @@ export default function Admission() {
   })
    
   };
+  const token = localStorage.getItem("auth");
+  useEffect(()=>{
+  if(!token){
+    navigate('/login')
+  }
+
+  },[])
 
   return (
     <>

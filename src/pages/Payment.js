@@ -59,7 +59,8 @@ export default function Payment() {
       },
     }).then((res) => {
       res.json().then((data) => {
-        if (data.code === 100) {
+         
+        if (data.statusCode === 200) {
           navigate("/home");
         }
       });

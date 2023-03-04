@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../Context/AuthContext";
+
 export default function Login() {
   const navigate = useNavigate();
 const {msg,authenticate}=useAuthContext();
@@ -10,25 +11,35 @@ const {msg,authenticate}=useAuthContext();
 
  
   const verify=async()=>{
-    console.log(Email+""+Password)
-    
-      fetch("http://localhost:8000/api/admin", {
-      method: "POST",
-      body: JSON.stringify({  adminPassword: Password,adminUser: Email }),
-      headers: { 'Content-Type': 'application/json' }
-    }).then((data) => {
-      data.json().then((result) =>{
-         if(result.msg===true){
-          authenticate("AUTH",result.msg)
-          localStorage.setItem("auth", result.accesToken)
-          navigate('/home')
-          return;
-         }
-         authenticate("WRONG_CRRIDENTIAL",result.msg)
+   
+    try{
 
+      fetch("https://layroad-admin.onrender.com/api/admin", {
+        method: "POST",
+        body: JSON.stringify({  adminPassword: Password,adminUser: Email }),
+        headers: { 'Content-Type': 'application/json' }
+      }).then((data) => {
+        data.json().then((result) =>{
           
+           if(result.msg===true){
+            authenticate("AUTH",result.msg)
+            localStorage.setItem("auth", result.accesToken)
+            navigate('/home')
+            return;
+           }
+           authenticate("WRONG_CRRIDENTIAL",result.msg)
+  
+            
+        }).catch((error)=>{
+       authenticate("SERVER ERROR","SERVER ERROR")
+            
+        })
       });
-    });
+    }catch(error){
+      authenticate("WRONG_CRRIDENTIAL","SERVER ERROR")
+    }
+    
+   
 
    
 
