@@ -1,20 +1,22 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../Context/AuthContext";
+import { REACT_APP_ADMIN_API } from "../config";
 
 export default function Login() {
+ 
   const navigate = useNavigate();
 const {msg,authenticate}=useAuthContext();
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   
-
+   
  
   const verify=async()=>{
    
     try{
 
-      fetch("https://layroad-admin.onrender.com/api/admin", {
+      fetch(`${REACT_APP_ADMIN_API}/api/admin`, {
         method: "POST",
         body: JSON.stringify({  adminPassword: Password,adminUser: Email }),
         headers: { 'Content-Type': 'application/json' }

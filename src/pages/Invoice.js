@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import {REACT_APP_ADMIN_API} from '../config'
 import html2pdf from "html2pdf.js";
 export default function Invoice() {
   const current = new Date();
@@ -23,7 +24,7 @@ export default function Invoice() {
     html2pdf().from(invoice).set(opt).save();
   };
   useEffect(() => {
-    fetch(`http://localhost:8000/api/single_lsit/${id}`, {
+    fetch(`${REACT_APP_ADMIN_API}/api/single_lsit/${id}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -33,7 +34,7 @@ export default function Invoice() {
         setData(item);
       });
     });
-    fetch(`http://localhost:8000/api/payment-details/${id}`, {
+    fetch(`${REACT_APP_ADMIN_API}/api/payment-details/${id}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

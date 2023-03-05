@@ -3,7 +3,10 @@ import Navbar from "../component/Navbar";
 
 import { Link ,useNavigate} from "react-router-dom";
 import Footer from "../component/Footer";
+import { REACT_APP_ADMIN_API } from "../config";
 export default function Home() {
+  
+
   const navigate=useNavigate();
   const token = localStorage.getItem("auth");
   const [list, setList] = useState([]);
@@ -13,7 +16,7 @@ export default function Home() {
     const yes = window.confirm("Are you sure you want to delete");
     if (yes) {
       fetch(
-        `http://localhost:8000/api//all_Student_List/remove?studentID=${ID}`,
+        `${REACT_APP_ADMIN_API}/api//all_Student_List/remove?studentID=${ID}`,
         {
           method: "DELETE",
           headers: {
@@ -33,7 +36,7 @@ export default function Home() {
       navigate('/login')
       return;
     }
-    fetch("http://localhost:8000/api/all_Student_List", {
+    fetch(`${REACT_APP_ADMIN_API}/api/all_Student_List`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

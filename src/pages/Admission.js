@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { json, Link,useNavigate } from "react-router-dom";
+import {  Link,useNavigate } from "react-router-dom";
 import Navbar from "../component/Navbar";
+import { REACT_APP_ADMIN_API } from "../config";
 export default function Admission() {
   const navigate=useNavigate();
   const [name, setName] = useState({ data: null, msg: "", error: true });
@@ -134,7 +135,7 @@ export default function Admission() {
       
     } 
         
-    fetch("http://localhost:8000/api/admission",{
+    fetch(`http://localhost:8000/api/admission`,{
       method: "POST",
       body:JSON.stringify(user),
       headers:{

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Navbar from "../component/Navbar";
+import { REACT_APP_ADMIN_API } from "../config";
 export default function Payment() {
   const navigate = useNavigate();
   const token = localStorage.getItem("auth");
@@ -50,7 +51,7 @@ export default function Payment() {
     }
     const bill = { description:description.data, paymentMethods: method.data, amount:amount.data, trancID:trancID.data };
     
-    fetch(`http://localhost:8000/api/create-payment/${id}`, {
+    fetch(`${REACT_APP_ADMIN_API}/api/create-payment/${id}`, {
       method: "POST",
       body: JSON.stringify(bill),
       headers: {
